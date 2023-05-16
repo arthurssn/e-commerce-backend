@@ -12,7 +12,7 @@ export class CityEntity {
   id: number;
 
   @Column({ name: 'state_id', nullable: false })
-  userId: number;
+  stateId: number;
 
   @Column({ name: 'name' })
   name: string;
