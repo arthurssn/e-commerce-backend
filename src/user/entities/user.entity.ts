@@ -18,7 +18,7 @@ export class UserEntity {
   email: string;
 
   @Column({ name: 'phone' })
-  phone: string;
+  phone?: string;
 
   @Column({ name: 'cpf', nullable: false })
   cpf: string;
@@ -30,8 +30,8 @@ export class UserEntity {
   typeUser: number;
 
   @CreateDateColumn({ name: 'created_at' })
-  created_at: Date;
+  created_at?: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updated_at: Date;
+  updated_at?: Date;
 }
