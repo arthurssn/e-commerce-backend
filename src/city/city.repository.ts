@@ -16,6 +16,11 @@ export class CityRepository implements ICityRepository {
 
   async findByState(stateId: number): Promise<CityEntity[]> {
     return await this.cityRepository.find({
+      select: {
+        id: true,
+        stateId: true,
+        name: true,
+      },
       where: {
         stateId,
       },
