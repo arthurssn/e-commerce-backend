@@ -13,16 +13,7 @@ export class UserRepository implements IUserRepository {
   ) {}
 
   async findAll(): Promise<UserEntity[]> {
-    return await this.userRepository.find({
-      select: {
-        id: true,
-        name: true,
-        typeUser: true,
-        cpf: true,
-        phone: true,
-        email: true,
-      },
-    });
+    return await this.userRepository.find();
   }
   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     return await this.userRepository.save(createUserDto);

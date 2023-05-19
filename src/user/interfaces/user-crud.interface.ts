@@ -1,7 +1,7 @@
 import { CreateUserDto } from '../dtos/createUser.dto';
-import { UserEntity } from '../entities/user.entity';
+import { returnUserDto } from '../dtos/returnUser.dto';
 
 export abstract class IUserCRUD {
-  abstract findAll(): Promise<UserEntity[]>;
-  abstract create(createUserDto: CreateUserDto): Promise<UserEntity>;
+  abstract findAll(): Promise<returnUserDto[]>;
+  abstract create(createUserDto: CreateUserDto): Promise<returnUserDto>;
 }
