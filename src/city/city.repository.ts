@@ -10,8 +10,17 @@ export class CityRepository implements ICityRepository {
     @InjectRepository(CityEntity)
     private readonly cityRepository: Repository<CityEntity>,
   ) {}
+
   async findAll(): Promise<CityEntity[]> {
     return this.cityRepository.find();
+  }
+
+  async findById(cityId: number): Promise<CityEntity> {
+    return await this.cityRepository.findOne({
+      where: {
+        id: cityId,
+      },
+    });
   }
 
   async findByState(stateId: number): Promise<CityEntity[]> {

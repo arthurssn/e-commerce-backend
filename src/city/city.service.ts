@@ -23,6 +23,10 @@ export class CityService implements ICityService {
     return cities;
   }
 
+  async findById(cityId: number): Promise<CityEntity> {
+    return await this.cityRepository.findById(cityId);
+  }
+
   async findByState(stateId: number): Promise<CityEntity[]> {
     const cachedData = await this.cityCacheService.getCachedCities(stateId);
     if (cachedData) {
