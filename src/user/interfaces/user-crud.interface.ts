@@ -4,4 +4,5 @@ import { returnUserDto } from '../dtos/returnUser.dto';
 export abstract class IUserCRUD {
   abstract findAll(): Promise<returnUserDto[]>;
   abstract create(createUserDto: CreateUserDto): Promise<returnUserDto>;
+  abstract findById(userId: number): Promise<returnUserDto>;
 }

@@ -7,9 +7,14 @@ import { returnUserDto } from './dtos/returnUser.dto';
 @Injectable()
 export class UserService implements IUserService {
   constructor(private readonly userRepository: IUserRepository) {}
+
   async findAll(): Promise<returnUserDto[]> {
     const users = await this.userRepository.findAll();
     return users.map((user) => new returnUserDto(user));
+  }
+
+  async findById(userId: number): Promise<returnUserDto> {
+    return this.userRepository.findById(userId);
   }
 
   async create(createUserDto: CreateUserDto): Promise<returnUserDto> {
