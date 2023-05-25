@@ -12,7 +12,7 @@ import { AddressEntity } from './entities/address.entity';
 import { IUserRepository } from 'src/user/interfaces/user-repository.interface';
 import { ICityRepository } from 'src/city/interfaces/city-repository.interface';
 import { UserEntity } from 'src/user/entities/user.entity';
-import { CityEntity } from 'src/city/entities/city.entity';
+import { ReturnCityDto } from 'src/city/dtos/return-city-dto';
 
 @Injectable()
 export class AddressService implements IAddressService {
@@ -49,7 +49,7 @@ export class AddressService implements IAddressService {
     return user;
   }
 
-  private async findCity({ cityId }: CreateAddressDto): Promise<CityEntity> {
+  private async findCity({ cityId }: CreateAddressDto): Promise<ReturnCityDto> {
     const city = await this.cityRepository.findById(cityId);
     if (!city) throw new NotFoundException('Cidade não existe');
 
