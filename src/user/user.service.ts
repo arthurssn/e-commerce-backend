@@ -4,6 +4,7 @@ import { hash } from 'bcrypt';
 import { IUserService } from './interfaces/user-service.interface';
 import { IUserRepository } from './interfaces/user-repository.interface';
 import { returnUserDto } from './dtos/returnUser.dto';
+import { returnUserWithAddressesDto } from 'src/user/interfaces/return-user-with-addresses.dto';
 @Injectable()
 export class UserService implements IUserService {
   constructor(private readonly userRepository: IUserRepository) {}
@@ -24,6 +25,14 @@ export class UserService implements IUserService {
       ...createUserDto,
       password: passwordHashed,
     });
+  }
+
+  async findAddressWithUsers(
+    userId: number,
+  ): Promise<returnUserWithAddressesDto> {
+    return new returnUserWithAddressesDto(
+      await this.userRepository.findUserWithAddresses(userId),
+    );
   }
 
   private async hashingPassword(password: string): Promise<string> {

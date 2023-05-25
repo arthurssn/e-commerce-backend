@@ -1,5 +1,9 @@
 import { CreateAddressDto } from '../dtos/createAddress.dto';
 import { AddressEntity } from '../entities/address.entity';
-import { IAddressCrud } from './address-crud.interface';
 
-export abstract class IAddressRepository extends IAddressCrud {}
+export abstract class IAddressRepository {
+  abstract create(
+    createAddressDto: CreateAddressDto,
+    userId: number,
+  ): Promise<AddressEntity>;
+}

@@ -10,6 +10,7 @@ import { CreateUserDto } from './dtos/createUser.dto';
 import { IUserService } from './interfaces/user-service.interface';
 import { IUserCRUD } from './interfaces/user-crud.interface';
 import { returnUserDto } from './dtos/returnUser.dto';
+import { returnUserWithAddressesDto } from 'src/user/interfaces/return-user-with-addresses.dto';
 
 @Controller('user')
 export class UserController implements IUserCRUD {
@@ -30,6 +31,13 @@ export class UserController implements IUserCRUD {
     userId: number,
   ): Promise<returnUserDto> {
     return this.userService.findById(userId);
+  }
+
+  @Get('/:userId/address')
+  async findAddressWithUsers(
+    userId: number,
+  ): Promise<returnUserWithAddressesDto> {
+    return await this.userService.findAddressWithUsers(userId);
   }
 
   @Post()
