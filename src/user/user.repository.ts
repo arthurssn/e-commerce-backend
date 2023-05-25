@@ -34,7 +34,13 @@ export class UserRepository implements IUserRepository {
       where: {
         id: userId,
       },
-      relations: ['addresses'],
+      relations: {
+        addresses: {
+          city: {
+            state: true,
+          },
+        },
+      },
     });
 
     return user;
