@@ -27,7 +27,7 @@ export class UserService implements IUserService {
     });
   }
 
-  async findAddressWithUsers(
+  async findUserWithAddresses(
     userId: number,
   ): Promise<returnUserWithAddressesDto> {
     return new returnUserWithAddressesDto(

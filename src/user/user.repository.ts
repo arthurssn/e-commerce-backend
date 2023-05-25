@@ -30,7 +30,7 @@ export class UserRepository implements IUserRepository {
   }
 
   async findUserWithAddresses(userId: number): Promise<UserEntity> {
-    const user = await this.userRepository.findOne({
+    return await this.userRepository.findOne({
       where: {
         id: userId,
       },
@@ -42,7 +42,9 @@ export class UserRepository implements IUserRepository {
         },
       },
     });
+  }
 
-    return user;
+  async findUserByEmail(email: string): Promise<UserEntity> {
+    return await this.userRepository.findOneBy({ email });
   }
 }

@@ -34,10 +34,10 @@ export class UserController implements IUserCRUD {
   }
 
   @Get('/:userId/address')
-  async findAddressWithUsers(
+  async findUserWithAddresses(
     userId: number,
   ): Promise<returnUserWithAddressesDto> {
-    return await this.userService.findAddressWithUsers(userId);
+    return await this.userService.findUserWithAddresses(userId);
   }
 
   @Post()

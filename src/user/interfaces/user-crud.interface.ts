@@ -6,7 +6,7 @@ export abstract class IUserCRUD {
   abstract findAll(): Promise<returnUserDto[]>;
   abstract create(createUserDto: CreateUserDto): Promise<returnUserDto>;
   abstract findById(userId: number): Promise<returnUserDto>;
-  abstract findAddressWithUsers(
+  abstract findUserWithAddresses(
     userId: number,
   ): Promise<returnUserWithAddressesDto>;
 }
