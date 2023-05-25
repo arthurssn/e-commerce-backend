@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ICityService } from './interfaces/city-service.interface';
-import { CityEntity } from './entities/city.entity';
 import { ICityRepository } from './interfaces/city-repository.interface';
 import { ICityCacheService } from './interfaces/city-cache-service.interface';
+import { ReturnCityDto } from './dtos/return-city-dto';
 
 @Injectable()
 export class CityService implements ICityService {
@@ -11,23 +11,25 @@ export class CityService implements ICityService {
     private readonly cityCacheService: ICityCacheService,
   ) {}
 
-  async findAll(): Promise<CityEntity[]> {
+  async findAll(): Promise<ReturnCityDto[]> {
     const cachedData = await this.cityCacheService.getCachedCities();
     if (cachedData) {
       return cachedData;
     }
-    const cities = await this.cityRepository.findAll();
+    const cities = (await this.cityRepository.findAll()).map((city) => {
+      return new ReturnCityDto(city);
+    });
 
     this.cityCacheService.cacheCities(cities);
 
     return cities;
   }
 
-  async findById(cityId: number): Promise<CityEntity> {
+  async findById(cityId: number): Promise<ReturnCityDto> {
     return await this.cityRepository.findById(cityId);
   }
 
-  async findByState(stateId: number): Promise<CityEntity[]> {
+  async findByState(stateId: number): Promise<ReturnCityDto[]> {
     const cachedData = await this.cityCacheService.getCachedCities(stateId);
     if (cachedData) {
       return cachedData;

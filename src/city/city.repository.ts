@@ -3,6 +3,7 @@ import { ICityRepository } from './interfaces/city-repository.interface';
 import { CityEntity } from './entities/city.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ReturnCityDto } from './dtos/return-city-dto';
 
 @Injectable()
 export class CityRepository implements ICityRepository {

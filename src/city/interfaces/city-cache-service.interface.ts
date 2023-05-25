@@ -1,6 +1,9 @@
-import { CityEntity } from '../entities/city.entity';
+import { ReturnCityDto } from '../dtos/return-city-dto';
 
 export abstract class ICityCacheService {
-  abstract getCachedCities(stateId?: number): Promise<CityEntity[]>;
-  abstract cacheCities(cities: CityEntity[], stateId?: number): Promise<void>;
+  abstract getCachedCities(stateId?: number): Promise<ReturnCityDto[]>;
+  abstract cacheCities(
+    cities: ReturnCityDto[],
+    stateId?: number,
+  ): Promise<void>;
 }

@@ -1,6 +1,6 @@
-import { CityEntity } from '../entities/city.entity';
+import { ReturnCityDto } from '../dtos/return-city-dto';
 
 export abstract class ICityCrud {
-  abstract findAll(stateId?: number): Promise<CityEntity[]>;
-  abstract findById(cityId: number): Promise<CityEntity>;
+  abstract findAll(): Promise<ReturnCityDto[]>;
+  abstract findById(cityId: number): Promise<ReturnCityDto>;
 }
