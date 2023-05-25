@@ -13,10 +13,6 @@ export class StateRepository implements IStateRepository {
 
   async findAll(): Promise<StateEntity[]> {
     return this.stateRepository.find({
-      select: {
-        id: true,
-        name: true,
-      },
       order: {
         name: 'ASC',
       },

@@ -1,5 +1,5 @@
-import { StateEntity } from '../entities/state.entity';
+import { ReturnStateDto } from '../dtos/return-state.dto';
 
 export abstract class IStateCRUD {
-  abstract findAll(): Promise<StateEntity[]>;
+  abstract findAll(): Promise<ReturnStateDto[]>;
 }
