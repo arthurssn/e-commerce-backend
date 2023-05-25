@@ -4,6 +4,8 @@ import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { IUserRepository } from './interfaces/user-repository.interface';
 import { CreateUserDto } from './dtos/createUser.dto';
+import { returnUserWithAddressesDto } from 'src/address/dtos/return-user-with-addresses.dto';
+import { ReturnAddress } from 'src/address/dtos/return-address.dto';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
@@ -25,5 +27,16 @@ export class UserRepository implements IUserRepository {
         id: userId,
       },
     });
+  }
+
+  async findUserWithAddresses(userId: number): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({
+      where: {
+        id: userId,
+      },
+      relations: ['addresses'],
+    });
+
+    return user;
   }
 }
