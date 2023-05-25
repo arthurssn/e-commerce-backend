@@ -10,7 +10,7 @@ import { CreateUserDto } from './dtos/createUser.dto';
 import { IUserService } from './interfaces/user-service.interface';
 import { IUserCRUD } from './interfaces/user-crud.interface';
 import { returnUserDto } from './dtos/returnUser.dto';
-import { returnUserWithAddressesDto } from 'src/user/interfaces/return-user-with-addresses.dto';
+import { returnUserWithAddressesDto } from 'src/user/dtos/return-user-with-addresses.dto';
 
 @Controller('user')
 export class UserController implements IUserCRUD {

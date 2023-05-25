@@ -4,7 +4,7 @@ import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { IUserRepository } from './interfaces/user-repository.interface';
 import { CreateUserDto } from './dtos/createUser.dto';
-import { returnUserWithAddressesDto } from 'src/user/interfaces/return-user-with-addresses.dto';
+import { returnUserWithAddressesDto } from 'src/user/dtos/return-user-with-addresses.dto';
 import { ReturnAddress } from 'src/address/dtos/return-address.dto';
 
 @Injectable()

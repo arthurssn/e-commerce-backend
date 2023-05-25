@@ -1,4 +1,4 @@
-import { returnUserWithAddressesDto } from 'src/user/interfaces/return-user-with-addresses.dto';
+import { returnUserWithAddressesDto } from 'src/user/dtos/return-user-with-addresses.dto';
 import { CreateUserDto } from '../dtos/createUser.dto';
 import { UserEntity } from '../entities/user.entity';
 
