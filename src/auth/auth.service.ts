@@ -1,6 +1,4 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IAuthService } from './interfaces/auth-service.interface';
-import { returnUserDto } from 'src/user/dtos/returnUser.dto';
 import { LoginDto } from './dtos/login.dto';
 import { IUserRepository } from 'src/user/interfaces/user-repository.interface';
 import { compare } from 'bcrypt';

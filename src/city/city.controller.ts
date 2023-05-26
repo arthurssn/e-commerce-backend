@@ -1,12 +1,14 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ICityCrud } from './interfaces/city-crud.interface';
-import { CityEntity } from './entities/city.entity';
 import { ICityService } from './interfaces/city-service.interface';
 import { ReturnCityDto } from './dtos/return-city-dto';
+import { Public } from 'src/auth/auth.module';
 
 @Controller('city')
 export class CityController implements ICityCrud {
   constructor(private readonly cityService: ICityService) {}
+
+  @Public()
   @Get()
   async findAll(@Query('state') stateId?: number): Promise<ReturnCityDto[]> {
     if (stateId) {

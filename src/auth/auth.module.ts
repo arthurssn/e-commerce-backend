@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, SetMetadata } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { IAuthService } from './interfaces/auth-service.interface';
@@ -8,6 +8,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
+import { AuthGuard } from './auth.guard';
+
+export const IS_PUBLIC_KEY = 'isPublic';
+export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
 
 @Module({
   imports: [
@@ -15,7 +19,7 @@ import { jwtConstants } from './constants';
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '1h' },
     }),
   ],
   controllers: [AuthController],
@@ -27,6 +31,10 @@ import { jwtConstants } from './constants';
     {
       provide: IUserRepository,
       useClass: UserRepository,
+    },
+    {
+      provide: 'APP_GUARD',
+      useClass: AuthGuard,
     },
   ],
 })
