@@ -7,7 +7,6 @@ import { UserRepository } from 'src/user/user.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
 import { AuthGuard } from './auth.guard';
 
 export const IS_PUBLIC_KEY = 'isPublic';
@@ -16,10 +15,12 @@ export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity]),
-    JwtModule.register({
-      global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '1h' },
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        global: true,
+        secret: process.env.JWT_SECRET_KEY,
+        signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
+      }),
     }),
   ],
   controllers: [AuthController],
