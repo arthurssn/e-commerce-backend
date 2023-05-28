@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginPayloadDto } from 'src/auth/dtos/login-payload.dto';
 import { ROLES_KEY } from 'src/decorators/roles.decorator';
 import { UserType } from 'src/enums/user-type.enum';
+import { extractTokenFromHeader } from 'src/helpers/extract-token-from-header';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -29,7 +30,7 @@ export class RolesGuard implements CanActivate {
   async getPayloadFromToken(
     authorization: string,
   ): Promise<LoginPayloadDto> | undefined {
-    const token = this.extractTokenFromHeader(authorization);
+    const token = extractTokenFromHeader(authorization);
 
     const payload: LoginPayloadDto | undefined = await this.jwtService
       .verifyAsync(token, {
@@ -38,10 +39,5 @@ export class RolesGuard implements CanActivate {
       .catch(() => undefined);
 
     return payload;
-  }
-
-  private extractTokenFromHeader(authorization: string): string | undefined {
-    const [type, token] = authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
   }
 }
