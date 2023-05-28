@@ -3,6 +3,7 @@ import { LoginDto } from './dtos/login.dto';
 import { IUserRepository } from 'src/user/interfaces/user-repository.interface';
 import { compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { LoginPayloadDto } from './dtos/login-payload.dto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -16,11 +17,11 @@ export class AuthService {
     if (!user && !isMatch)
       throw new NotFoundException('Email e/ou senha incorreto(s)!');
 
-    const payload = { sub: user.id, username: user.name };
+    const payload = new LoginPayloadDto(user);
 
     return {
       user,
-      authorization: await this.jwtService.signAsync(payload),
+      authorization: await this.jwtService.signAsync({ ...payload }),
     };
   }
 }
