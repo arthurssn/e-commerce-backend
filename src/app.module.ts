@@ -6,7 +6,9 @@ import { StateModule } from './state/state.module';
 import { CityModule } from './city/city.module';
 import { AddressModule } from './address/address.module';
 import { AuthModule } from './auth/auth.module';
-
+import { RolesGuard } from './guards/roles.guard';
+import { JwtModule } from '@nestjs/jwt';
+import { APP_GUARD } from '@nestjs/core';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,8 +30,14 @@ import { AuthModule } from './auth/auth.module';
     CityModule,
     AddressModule,
     AuthModule,
+    JwtModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}
