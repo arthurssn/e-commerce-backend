@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   ValidationPipe,
@@ -11,6 +13,7 @@ import { IUserService } from './interfaces/user-service.interface';
 import { IUserCRUD } from './interfaces/user-crud.interface';
 import { returnUserDto } from './dtos/returnUser.dto';
 import { returnUserWithAddressesDto } from 'src/user/dtos/return-user-with-addresses.dto';
+import { Public } from 'src/auth/auth.module';
 
 @Controller('user')
 export class UserController implements IUserCRUD {
@@ -40,12 +43,13 @@ export class UserController implements IUserCRUD {
     return await this.userService.findUserWithAddresses(userId);
   }
 
+  @Public()
   @Post()
   async create(@Body(new ValidationPipe()) createUser: CreateUserDto) {
     try {
       return await this.userService.create(createUser);
     } catch (error) {
-      throw new Error(error);
+      throw new HttpException(error.message, error.status);
     }
   }
 }

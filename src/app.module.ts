@@ -24,6 +24,7 @@ import { APP_GUARD } from '@nestjs/core';
       username: process.env.DB_USERNAME,
       entities: [`${__dirname}/**/*.entity{.js,.ts}`],
       migrations: [`${__dirname}/migration/{.js,*,.ts}`],
+      migrationsRun: true,
     }),
     UserModule,
     StateModule,

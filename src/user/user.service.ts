@@ -5,6 +5,7 @@ import { IUserService } from './interfaces/user-service.interface';
 import { IUserRepository } from './interfaces/user-repository.interface';
 import { returnUserDto } from './dtos/returnUser.dto';
 import { returnUserWithAddressesDto } from 'src/user/dtos/return-user-with-addresses.dto';
+import { EmailUnavailableException } from 'src/exceptions/email-unavailable.exception';
 @Injectable()
 export class UserService implements IUserService {
   constructor(private readonly userRepository: IUserRepository) {}
@@ -19,12 +20,18 @@ export class UserService implements IUserService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<returnUserDto> {
+    if (!(await this.emailIsAvailable(createUserDto)))
+      throw new EmailUnavailableException();
     const passwordHashed = await this.hashingPassword(createUserDto.password);
-    return this.userRepository.create({
-      typeUser: 1,
-      ...createUserDto,
-      password: passwordHashed,
-    });
+    const user = new returnUserDto(
+      await this.userRepository.create({
+        typeUser: 1,
+        ...createUserDto,
+        password: passwordHashed,
+      }),
+    );
+
+    return user;
   }
 
   async findUserWithAddresses(
@@ -39,5 +46,9 @@ export class UserService implements IUserService {
     const saltOrRounds = 10;
     const passwordHashed = await hash(password, saltOrRounds);
     return passwordHashed;
+  }
+
+  private async emailIsAvailable({ email }: CreateUserDto) {
+    return !(await this.userRepository.findUserByEmail(email));
   }
 }
