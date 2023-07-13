@@ -8,7 +8,7 @@ export class returnUserWithAddressesDto {
 
   constructor(userEntity: UserEntity) {
     this.user = new returnUserDto(userEntity);
-    this.addresses = userEntity.addresses.map(
+    this.addresses = userEntity.addresses?.map(
       (address) => new ReturnAddress(address),
     );
   }
