@@ -145,7 +145,7 @@ describe('UserService', () => {
       const result = await userService.findUserWithAddresses(userId);
 
       expect(userRepository.findUserWithAddresses).toHaveBeenCalledWith(userId);
-      expect(result).not.toEqual(new returnUserWithAddressesDto(returnedUser));
+      expect(result).toEqual(new returnUserWithAddressesDto(returnedUser));
     });
   });
 });
