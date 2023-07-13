@@ -1,8 +1,10 @@
+import { EmailUnavailableException } from 'src/exceptions/email-unavailable.exception';
 import { CreateUserDto } from '../dtos/createUser.dto';
 import { returnUserDto } from '../dtos/returnUser.dto';
 import { UserEntity } from '../entities/user.entity';
 import { IUserRepository } from '../interfaces/user-repository.interface';
 import { UserService } from '../user.service';
+import { returnUserWithAddressesDto } from '../dtos/return-user-with-addresses.dto';
 
 describe('UserService', () => {
   let userService: UserService;
@@ -80,7 +82,6 @@ describe('UserService', () => {
         ...createUserDto,
         id: 1,
         password: hashedPassword,
-        typeUser: 1,
         addresses: [],
       };
 
@@ -103,6 +104,48 @@ describe('UserService', () => {
       });
 
       expect(result).toEqual(new returnUserDto(createdUser));
+    });
+
+    it('should throw EmailUnavailableException if email is not available', async () => {
+      const createUserDto: CreateUserDto = {
+        name: 'Arthur',
+        cpf: '123.123.123-12',
+        email: 'arthurnovaes@example.com',
+        password: '123456',
+        typeUser: 1,
+      };
+
+      (userRepository.findUserByEmail as jest.Mock).mockResolvedValue({
+        email: 'test@example.com',
+      });
+
+      expect(userService.create(createUserDto)).rejects.toThrow(
+        EmailUnavailableException,
+      );
+    });
+  });
+
+  describe('findUserWithAddresses', () => {
+    it('should return a user with address', async () => {
+      const userId = 1;
+
+      const returnedUser: UserEntity = {
+        name: 'Arthur',
+        cpf: '123.123.123-12',
+        email: 'arthurnovaes@example.com',
+        password: '123456',
+        typeUser: 1,
+        id: 1,
+        addresses: [],
+      };
+
+      (userRepository.findUserWithAddresses as jest.Mock).mockResolvedValue(
+        returnedUser,
+      );
+      const result = await userService.findUserWithAddresses(userId);
+
+      expect(userRepository.findUserWithAddresses).toHaveBeenCalledWith(userId);
+      expect(result).toEqual(new returnUserWithAddressesDto(returnedUser));
     });
   });
 });
