@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpException,
+  HttpStatus,
   Param,
   Post,
   ValidationPipe,
@@ -32,14 +33,28 @@ export class UserController implements IUserCRUD {
     @Param('userId')
     userId: number,
   ): Promise<returnUserDto> {
-    return this.userService.findById(userId);
+    try {
+      return this.userService.findById(userId);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status ?? HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Get('/:userId/address')
   async findUserWithAddresses(
     userId: number,
   ): Promise<returnUserWithAddressesDto> {
-    return await this.userService.findUserWithAddresses(userId);
+    try {
+      return await this.userService.findUserWithAddresses(userId);
+    } catch (error) {
+      throw new HttpException(
+        error.message,
+        error.status ?? HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Public()
@@ -48,7 +63,10 @@ export class UserController implements IUserCRUD {
     try {
       return await this.userService.create(createUser);
     } catch (error) {
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(
+        error.message,
+        error.status ?? HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }
